@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "723245263552",
+    "firebase_url": "https://kuwait-women-market.firebaseio.com",
+    "project_id": "kuwait-women-market",
+    "storage_bucket": "kuwait-women-market.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723245263552:android:5f24094795181a54415b25",
+        "android_client_info": {
+          "package_name": "com.android.kwm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723245263552-48ocff7a4rk79o9qap12vh7gc1u1uktm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.kwm",
+            "certificate_hash": "51247baa05eff6421afb67f99b356fa2ad164748"
+          }
+        },
+        {
+          "client_id": "723245263552-7ace63taolbm3qdj1dsdgl6uheh2cgde.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmOOJC7vxgBPK5Xgaz6Dd7OcfcxDAer44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723245263552-7ace63taolbm3qdj1dsdgl6uheh2cgde.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
