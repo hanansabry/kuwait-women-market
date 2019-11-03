@@ -1,5 +1,6 @@
 package com.android.kwm.advertiser.store;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,10 +51,12 @@ public class StoreItemsAdapter extends RecyclerView.Adapter<StoreItemsAdapter.St
     class StoreItemViewHolder extends RecyclerView.ViewHolder implements ModelItemRowView{
         private TextView modelNameTextView, categoryNameTextView, activeInActiveTextView;
         private SwitchCompat activeSwitch;
+        private Context context;
 
         public StoreItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            context = itemView.getContext();
             modelNameTextView = itemView.findViewById(R.id.model_name_textview);
             categoryNameTextView = itemView.findViewById(R.id.category_name_textview);
             activeInActiveTextView = itemView.findViewById(R.id.item_status_textview);
@@ -73,7 +76,12 @@ public class StoreItemsAdapter extends RecyclerView.Adapter<StoreItemsAdapter.St
         @Override
         public void setModelItemSwitchActiveInaActive(boolean active) {
             activeSwitch.setChecked(active);
-            activeInActiveTextView.setText(active? "active" : "inactive");
+            activeInActiveTextView.setText(active? "Active" : "Inactive");
+            if (active) {
+                activeInActiveTextView.setTextColor(context.getResources().getColor(R.color.colorAccent));
+            } else {
+                activeInActiveTextView.setTextColor(context.getResources().getColor(android.R.color.darker_gray));
+            }
         }
     }
 }

@@ -152,7 +152,8 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
                         Date currentDay = Calendar.getInstance().getTime();
                         try {
                             Date endDate = Injection.getDateFormatter().parse(modelItem.getAdvertiseEndDate());
-                            modelItem.setActive(currentDay.before(endDate));
+                            boolean isSameDay = isCurrentDay(currentDay, endDate);
+                            modelItem.setActive(currentDay.before(endDate) || isSameDay);
                         } catch (ParseException e) {
                             modelItem.setActive(false);
                         }
@@ -168,5 +169,14 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
                 callback.onModelItemsRetrievedFailed(databaseError.getMessage());
             }
         });
+    }
+
+    private boolean isCurrentDay(Date currentDay, Date endDate) {
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(currentDay);
+        cal2.setTime(endDate);
+        return cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
+                            && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
     }
 }

@@ -3,6 +3,7 @@ package com.android.kwm.advertiser.addmodel;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
@@ -52,6 +53,7 @@ public class AddModel extends AppCompatActivity implements AddModelContract.View
     private String mSelectedCategory;
     private ModelItem.AdvertisingTimeType mAdvertisingTimeType = ModelItem.AdvertisingTimeType.Month;
     private ProgressBar spinnerProgressBar;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,9 +219,16 @@ public class AddModel extends AppCompatActivity implements AddModelContract.View
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         } else if (item.getItemId() == R.id.done) {
+            showProgressDialog();
             mPresenter.addNewModelItem(getModelItemData(), this);
         }
         return true;
+    }
+
+    private void showProgressDialog() {
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Adding new model, Please wait..");
+        dialog.show();
     }
 
     private ModelItem getModelItemData() {
@@ -330,11 +339,13 @@ public class AddModel extends AppCompatActivity implements AddModelContract.View
     @Override
     public void onSuccessfullyAddingModelItem() {
         Toast.makeText(this, "The model is added successfully", Toast.LENGTH_SHORT).show();
+        dialog.dismiss();
         finish();
     }
 
     @Override
     public void onAddingModelItemFailed(String errmsg) {
+        dialog.dismiss();
         Toast.makeText(this, errmsg, Toast.LENGTH_SHORT).show();
     }
 }

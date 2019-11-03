@@ -2,6 +2,8 @@ package com.android.kwm.model;
 
 import android.net.Uri;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 
 public class ModelItem {
@@ -48,6 +50,7 @@ public class ModelItem {
         this.category = category;
     }
 
+    @Exclude
     public boolean isActive() {
         return active;
     }
