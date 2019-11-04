@@ -29,6 +29,7 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
 
     private static final String MODELS_NODE = "models";
     private static final String ADVERTISERS_NODE = "advertisers";
+    private static final String CATEGORIES_NODE = "categories";
     private final FirebaseDatabase mDatabase;
     private SimpleDateFormat df;
     private String advertiserId;
@@ -54,7 +55,7 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
         //upload model images to firebase storage
         final ArrayList<String> firebaseStorageImages = new ArrayList<>();
         for (String uri : modelItem.getModelImages()) {
-            mImagesStorage.uploadImage(Uri.parse(uri), advertiserId, modelItem.getName(), new ImagesStorage.UploadImageCallback() {
+            mImagesStorage.uploadImage(Uri.parse(uri), modelItem.getCategory().getId(), modelId, new ImagesStorage.UploadImageCallback() {
                 @Override
                 public void onSuccessfullyImageUploaded(String imgUri) {
                     firebaseStorageImages.add(imgUri);
@@ -65,7 +66,7 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     callback.onSuccessfullyAddingModelItem();
-                                    addModelToAdvertiser(modelId);
+                                    addModelToAdvertiserAndCategory(modelId, modelItem.getCategory().getId());
                                 } else {
                                     callback.onAddingModelItemFailed(task.getException().getMessage());
                                 }
@@ -82,11 +83,13 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
         }
     }
 
-    private void addModelToAdvertiser(String modelId) {
+    private void addModelToAdvertiserAndCategory(String modelId, String categoryId) {
         DatabaseReference advertisersDbRef = mDatabase.getReference(ADVERTISERS_NODE);
+        DatabaseReference categoriesDbRef = mDatabase.getReference(CATEGORIES_NODE);
         HashMap<String, Object> modelIdValue = new HashMap<>();
         modelIdValue.put(modelId, true);
         advertisersDbRef.child(advertiserId).child("models").updateChildren(modelIdValue);
+        categoriesDbRef.child(categoryId).child("models").updateChildren(modelIdValue);
     }
 
     private String getAdvertiseStartDate() {

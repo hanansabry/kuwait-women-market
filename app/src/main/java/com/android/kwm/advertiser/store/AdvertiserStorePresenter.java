@@ -32,7 +32,7 @@ public class AdvertiserStorePresenter implements AdvertiserStoreContract.Present
     public void onBindStoreItemRowViewAtPosition(int position, ModelItemRowView holder) {
         ModelItem modelItem = mStoreItems.get(position);
         holder.setModelItemName(modelItem.getName());
-        holder.setModelCategoryName(modelItem.getCategory());
+        holder.setModelCategoryName(modelItem.getCategory().getName());
         holder.setModelItemSwitchActiveInaActive(modelItem.isActive());
     }
 

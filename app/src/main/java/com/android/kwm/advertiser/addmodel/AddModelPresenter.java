@@ -24,7 +24,7 @@ public class AddModelPresenter implements AddModelContract.Presenter {
 
     private boolean validateModelData(ModelItem modelItem) {
         boolean isValid = true;
-        if (modelItem.getCategory() == null || modelItem.getCategory().isEmpty()) {
+        if (modelItem.getCategory() == null) {
             isValid = false;
             mView.setSelectCategoryErrorMessage();
         }

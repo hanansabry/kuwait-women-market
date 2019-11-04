@@ -50,7 +50,7 @@ public class AddModel extends AppCompatActivity implements AddModelContract.View
     private double monthsUnitPrice;
     private static final int PICK_MULTIPLE_IMAGE = 2;
     private ArrayList<String> mSelectedImageArrayUri;
-    private String mSelectedCategory;
+    private Category mSelectedCategory;
     private ModelItem.AdvertisingTimeType mAdvertisingTimeType = ModelItem.AdvertisingTimeType.Month;
     private ProgressBar spinnerProgressBar;
     private ProgressDialog dialog;
@@ -112,7 +112,7 @@ public class AddModel extends AppCompatActivity implements AddModelContract.View
     private void initializeCategorySpinner() {
         mPresenter.retrieveCategories(new CategoriesRepository.CategoriesCallback() {
             @Override
-            public void onCategoriesRetrieved(ArrayList<Category> categories) {
+            public void onCategoriesRetrieved(final ArrayList<Category> categories) {
                 Spinner categorySpinner = findViewById(R.id.category_spinner);
                 spinnerProgressBar.setVisibility(View.INVISIBLE);
                 categorySpinner.setVisibility(View.VISIBLE);
@@ -126,7 +126,7 @@ public class AddModel extends AppCompatActivity implements AddModelContract.View
                 categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        mSelectedCategory = categoriesAdapter.getItem(position);
+                        mSelectedCategory = categories.get(position);
                     }
 
                     @Override

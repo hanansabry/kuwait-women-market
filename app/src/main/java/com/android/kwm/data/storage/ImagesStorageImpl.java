@@ -25,9 +25,9 @@ public class ImagesStorageImpl implements ImagesStorage {
     }
 
     @Override
-    public void uploadImage(Uri filePath, String advertiserId, String modelName, final UploadImageCallback callback) {
+    public void uploadImage(Uri filePath, String categoryId, String modelId, final UploadImageCallback callback) {
         if (filePath != null) {
-            String storagePath = "models/" + advertiserId + "/" + modelName + "/" + UUID.randomUUID().toString();
+            String storagePath = "categories/" + categoryId + "/models/" + modelId + "/" + UUID.randomUUID().toString();
             final StorageReference storageRef = firebaseStorage.getReference().child(storagePath);
             storageRef.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
