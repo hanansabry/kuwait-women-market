@@ -15,11 +15,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class StoreItemsAdapter extends RecyclerView.Adapter<StoreItemsAdapter.StoreItemViewHolder> {
+public class ModelsItemsAdapter extends RecyclerView.Adapter<ModelsItemsAdapter.StoreItemViewHolder> {
 
     private final AdvertiserStoreContract.Presenter mPresenter;
 
-    public StoreItemsAdapter(AdvertiserStoreContract.Presenter presenter) {
+    public ModelsItemsAdapter(AdvertiserStoreContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

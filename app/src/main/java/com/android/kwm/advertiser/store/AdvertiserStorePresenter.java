@@ -45,4 +45,9 @@ public class AdvertiserStorePresenter implements AdvertiserStoreContract.Present
     public void retrieveStoreItems(ModelItemsRepository.RetrieveModelItemsCallback callback) {
         mModelItemsRepository.retrieveModelItems(callback);
     }
+
+    @Override
+    public void retrieveCategoryModelsItems(String categoryId, ModelItemsRepository.RetrieveModelItemsCallback callback) {
+
+    }
 }

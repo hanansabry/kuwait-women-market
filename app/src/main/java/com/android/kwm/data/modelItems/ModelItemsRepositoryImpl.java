@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.android.kwm.Injection;
+import com.android.kwm.data.categories.CategoriesRepository;
 import com.android.kwm.data.storage.ImagesStorage;
 import com.android.kwm.model.ModelItem;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -130,7 +131,7 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
                     }
 
                     //get models items
-                    getModelItems(modelIds, callback);
+                    getModelItems(false, modelIds, callback);
                 } else {
                     callback.onModelItemsRetrieved(new ArrayList<ModelItem>());
                 }
@@ -143,7 +144,7 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
         });
     }
 
-    private void getModelItems(final ArrayList<String> modelIds, final RetrieveModelItemsCallback callback) {
+    private void getModelItems(final boolean getActiveOnly, final ArrayList<String> modelIds, final RetrieveModelItemsCallback callback) {
         DatabaseReference modelsRef = mDatabase.getReference(MODELS_NODE);
         modelsRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -160,11 +161,46 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
                         } catch (ParseException e) {
                             modelItem.setActive(false);
                         }
-                        modelItems.add(modelItem);
+                        if (getActiveOnly) {
+                            if (modelItem.isActive()) {
+                                modelItems.add(modelItem);
+                            }
+                        } else {
+                            modelItems.add(modelItem);
+                        }
                     }
                 }
 
                 callback.onModelItemsRetrieved(modelItems);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                callback.onModelItemsRetrievedFailed(databaseError.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void retrieveModelItemsByCategory(String categoryId, final ModelItemsRepository.RetrieveModelItemsCallback callback) {
+        DatabaseReference advertiserRef = mDatabase.getReference(CATEGORIES_NODE).child(categoryId);
+
+        //get ids of advertiser's models
+        advertiserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("models").exists()) {
+                    ArrayList<String> modelIds = new ArrayList<>();
+                    DataSnapshot modelsSnapshot = dataSnapshot.child("models");
+                    for (DataSnapshot modelSnapshot : modelsSnapshot.getChildren()) {
+                        modelIds.add(modelSnapshot.getKey());
+                    }
+
+                    //get models items
+                    getModelItems(true, modelIds, callback);
+                } else {
+                    callback.onModelItemsRetrieved(new ArrayList<ModelItem>());
+                }
             }
 
             @Override

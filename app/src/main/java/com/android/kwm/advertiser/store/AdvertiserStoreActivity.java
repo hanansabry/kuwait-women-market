@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class AdvertiserStoreActivity extends AppCompatActivity implements AdvertiserStoreContract.View, ModelItemsRepository.RetrieveModelItemsCallback {
 
     private AdvertiserStoreContract.Presenter mPresenter;
-    private StoreItemsAdapter storeItemsAdapter;
+    private ModelsItemsAdapter modelsItemsAdapter;
     private ProgressBar progressBar;
     private EmptyRecyclerView storeItemsRecyclerView;
     private View emptyView;
@@ -46,10 +46,10 @@ public class AdvertiserStoreActivity extends AppCompatActivity implements Advert
     private void initializeRecylerView() {
         emptyView = findViewById(R.id.empty_view);
         storeItemsRecyclerView = findViewById(R.id.store_items_recycler_view);
-        storeItemsAdapter = new StoreItemsAdapter(mPresenter);
+        modelsItemsAdapter = new ModelsItemsAdapter(mPresenter);
 
         storeItemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        storeItemsRecyclerView.setAdapter(storeItemsAdapter);
+        storeItemsRecyclerView.setAdapter(modelsItemsAdapter);
     }
 
 
@@ -79,7 +79,7 @@ public class AdvertiserStoreActivity extends AppCompatActivity implements Advert
     @Override
     public void onModelItemsRetrieved(ArrayList<ModelItem> modelItems) {
         progressBar.setVisibility(View.INVISIBLE);
-        storeItemsAdapter.bindStoreItems(modelItems);
+        modelsItemsAdapter.bindStoreItems(modelItems);
         storeItemsRecyclerView.setEmptyView(emptyView);
     }
 
