@@ -48,7 +48,7 @@ public class ModelsItemsAdapter extends RecyclerView.Adapter<ModelsItemsAdapter.
     }
 
 
-    class StoreItemViewHolder extends RecyclerView.ViewHolder implements ModelItemRowView{
+    class StoreItemViewHolder extends RecyclerView.ViewHolder implements ModelItemRowView, View.OnClickListener {
         private TextView modelNameTextView, categoryNameTextView, activeInActiveTextView;
         private SwitchCompat activeSwitch;
         private Context context;
@@ -61,6 +61,8 @@ public class ModelsItemsAdapter extends RecyclerView.Adapter<ModelsItemsAdapter.
             categoryNameTextView = itemView.findViewById(R.id.category_name_textview);
             activeInActiveTextView = itemView.findViewById(R.id.item_status_textview);
             activeSwitch = itemView.findViewById(R.id.active_switch);
+
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -82,6 +84,11 @@ public class ModelsItemsAdapter extends RecyclerView.Adapter<ModelsItemsAdapter.
             } else {
                 activeInActiveTextView.setTextColor(context.getResources().getColor(android.R.color.darker_gray));
             }
+        }
+
+        @Override
+        public void onClick(View v) {
+            mPresenter.onModelItemClicked(getAdapterPosition());
         }
     }
 }

@@ -1,12 +1,16 @@
 package com.android.kwm.model;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
 
-public class ModelItem {
+public class ModelItem implements Parcelable {
+
+    public static final String MODEL = "MODEL";
 
     public enum AdvertisingTimeType {
         Month, Day
@@ -25,6 +29,57 @@ public class ModelItem {
     private String advertiseStartDate;
     private String advertiseEndDate;
     private String advertiserId;
+
+    public ModelItem() {
+    }
+
+    protected ModelItem(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        desc = in.readString();
+        category = in.readParcelable(Category.class.getClassLoader());
+        buyingPrice = in.readDouble();
+        sellingPrice = in.readDouble();
+        advertisingTime = in.readInt();
+        active = in.readByte() != 0;
+        modelImages = in.createStringArrayList();
+        advertiseStartDate = in.readString();
+        advertiseEndDate = in.readString();
+        advertiserId = in.readString();
+    }
+
+    public static final Creator<ModelItem> CREATOR = new Creator<ModelItem>() {
+        @Override
+        public ModelItem createFromParcel(Parcel in) {
+            return new ModelItem(in);
+        }
+
+        @Override
+        public ModelItem[] newArray(int size) {
+            return new ModelItem[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(desc);
+        dest.writeParcelable(category, flags);
+        dest.writeDouble(buyingPrice);
+        dest.writeDouble(sellingPrice);
+        dest.writeInt(advertisingTime);
+        dest.writeByte((byte) (active ? 1 : 0));
+        dest.writeStringList(modelImages);
+        dest.writeString(advertiseStartDate);
+        dest.writeString(advertiseEndDate);
+        dest.writeString(advertiserId);
+    }
 
     public String getId() {
         return id;

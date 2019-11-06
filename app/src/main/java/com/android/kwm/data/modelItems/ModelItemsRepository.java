@@ -21,7 +21,7 @@ public interface ModelItemsRepository {
 
     void addNewModelItem(ModelItem modelItem, ModelItemsInsertionCallback callback);
 
-    void retrieveModelItems(RetrieveModelItemsCallback callback);
+    void retrieveModelItemsByAdvertiser(RetrieveModelItemsCallback callback);
 
     void retrieveModelItemsByCategory(String categoryId, ModelItemsRepository.RetrieveModelItemsCallback callback);
 }

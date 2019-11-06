@@ -23,5 +23,7 @@ public interface AdvertiserStoreContract {
         void retrieveStoreItems(ModelItemsRepository.RetrieveModelItemsCallback callback);
 
         void retrieveCategoryModelsItems(String categoryId, ModelItemsRepository.RetrieveModelItemsCallback callback);
+
+        void onModelItemClicked(int position);
     }
 }

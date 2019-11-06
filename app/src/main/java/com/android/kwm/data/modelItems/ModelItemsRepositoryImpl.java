@@ -40,7 +40,9 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
         mImagesStorage = imagesStorage;
         mDatabase = FirebaseDatabase.getInstance();
         df = Injection.getDateFormatter();
-        advertiserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            advertiserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
     }
 
     @Override
@@ -116,7 +118,7 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
     }
 
     @Override
-    public void retrieveModelItems(final RetrieveModelItemsCallback callback) {
+    public void retrieveModelItemsByAdvertiser(final RetrieveModelItemsCallback callback) {
         DatabaseReference advertiserRef = mDatabase.getReference(ADVERTISERS_NODE).child(advertiserId);
 
         //get ids of advertiser's models
@@ -185,7 +187,7 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
     public void retrieveModelItemsByCategory(String categoryId, final ModelItemsRepository.RetrieveModelItemsCallback callback) {
         DatabaseReference advertiserRef = mDatabase.getReference(CATEGORIES_NODE).child(categoryId);
 
-        //get ids of advertiser's models
+        //get ids of categories' models
         advertiserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

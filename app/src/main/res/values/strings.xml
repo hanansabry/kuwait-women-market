@@ -14,4 +14,10 @@
     <string name="username">Username</string>
     <string name="phone">Phone</string>
     <string name="register">Register</string>
+    <string name="model_name_value">Model Name: %s</string>
+    <string name="category_name_value">Category: %s</string>
+    <string name="price_value">Price: %.0f KWD</string>
+    <string name="selling_shop_name_value">Selling Shop: %s</string>
+    <string name="shop_phone_value">Phone: %s</string>
+    <string name="shop_email_value">Email: %s</string>
 </resources>

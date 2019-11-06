@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import com.android.kwm.advertiser.store.ModelsItemsAdapter;
 import com.android.kwm.data.modelItems.ModelItemsRepository;
 import com.android.kwm.model.Category;
 import com.android.kwm.model.ModelItem;
+import com.android.kwm.shopping.itemdetails.ModelItemDetails;
 
 import java.util.ArrayList;
 
@@ -89,5 +91,12 @@ public class CategoryModels extends AppCompatActivity implements BaseView<Catego
             Toast.makeText(this, "filter is clicked", Toast.LENGTH_SHORT).show();
         }
         return true;
+    }
+
+    public void goToModelItemDetailsScreen(ModelItem modelItem) {
+        Toast.makeText(this, modelItem.getName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ModelItemDetails.class);
+        intent.putExtra(ModelItem.MODEL, modelItem);
+        startActivity(intent);
     }
 }

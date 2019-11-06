@@ -1,5 +1,7 @@
 package com.android.kwm.model;
 
+import com.google.firebase.database.Exclude;
+
 public class Advertiser {
 
     private String id;
@@ -33,6 +35,7 @@ public class Advertiser {
         this.userName = userName;
     }
 
+    @Exclude
     public String getPassword() {
         return password;
     }

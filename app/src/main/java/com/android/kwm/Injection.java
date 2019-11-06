@@ -1,5 +1,7 @@
 package com.android.kwm;
 
+import com.android.kwm.data.advertisers.AdvertiserRepository;
+import com.android.kwm.data.advertisers.AdvertiserRepositoryImpl;
 import com.android.kwm.data.advertising_time_options.AdvertisingTimeRepository;
 import com.android.kwm.data.advertising_time_options.AdvertisingTimeRepositoryImp;
 import com.android.kwm.data.authentication.AuthenticationRepository;
@@ -43,5 +45,9 @@ public class Injection {
 
     public static SimpleDateFormat getDateFormatter() {
         return new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+    }
+
+    public static AdvertiserRepository provideAdvertiserRepository() {
+        return new AdvertiserRepositoryImpl();
     }
 }

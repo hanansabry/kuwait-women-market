@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 public class CategoryModelsPresenter implements AdvertiserStoreContract.Presenter {
 
-    private final BaseView<CategoryModelsPresenter> mView;
+    private final CategoryModels mView;
     private final ModelItemsRepository mModelItemRepository;
 
     private ArrayList<ModelItem> mModelItems = new ArrayList<>();
 
-    public CategoryModelsPresenter(BaseView<CategoryModelsPresenter> view, ModelItemsRepository modelItemRepository) {
+    public CategoryModelsPresenter(CategoryModels view, ModelItemsRepository modelItemRepository) {
         mView = view;
         mModelItemRepository = modelItemRepository;
     }
@@ -48,6 +48,11 @@ public class CategoryModelsPresenter implements AdvertiserStoreContract.Presente
     @Override
     public void retrieveCategoryModelsItems(String categoryId, ModelItemsRepository.RetrieveModelItemsCallback callback) {
         mModelItemRepository.retrieveModelItemsByCategory(categoryId, callback);
+    }
+
+    @Override
+    public void onModelItemClicked(int position) {
+        mView.goToModelItemDetailsScreen(mModelItems.get(position));
     }
 
     @Override
