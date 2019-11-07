@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_screens"
+    tools:context=".shopping.itemdetails.ModelItemDetails">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_screens"
-        tools:context=".shopping.itemdetails.ModelItemDetails">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/action_bar"
@@ -42,11 +42,11 @@
         </RelativeLayout>
 
         <!--<View-->
-            <!--android:id="@+id/divider1"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_below="@id/action_bar"-->
-            <!--android:background="@android:color/darker_gray" />-->
+        <!--android:id="@+id/divider1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_below="@id/action_bar"-->
+        <!--android:background="@android:color/darker_gray" />-->
 
         <RelativeLayout
             android:id="@+id/model_name_price_layout"
@@ -108,7 +108,7 @@
                 app:sliderIndicatorSelectedColor="#5A5A5A"
                 app:sliderIndicatorUnselectedColor="#FFF"
                 app:sliderScrollTimeInSec="4"
-                app:sliderStartAutoCycle="true"  />
+                app:sliderStartAutoCycle="true" />
 
         </androidx.cardview.widget.CardView>
 

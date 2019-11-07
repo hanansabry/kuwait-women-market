@@ -122,4 +122,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         hideProgressBar();
         Toast.makeText(this, errmsg, Toast.LENGTH_LONG).show();
     }
+
+    public void onBackClicked(View view) {
+        onBackPressed();
+    }
 }

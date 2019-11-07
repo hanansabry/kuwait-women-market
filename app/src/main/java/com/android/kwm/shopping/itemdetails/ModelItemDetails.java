@@ -19,7 +19,7 @@ import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
-public class ModelItemDetails extends AppCompatActivity implements ModelItemDetailsContract.View, AdvertiserRepository.RetrieveAdvertiserCallback {
+public class ModelItemDetails extends AppCompatActivity implements ModelItemDetailsContract.View {
 
     private TextView categoryNameTitleTextView, modelNameTitleTextView, priceTitleTextView, categoryNameDetailsTextView
             , modelNameDetailsTextView, priceDetailsView, modelDescTextView,sellingShopNameTextView
@@ -37,7 +37,6 @@ public class ModelItemDetails extends AppCompatActivity implements ModelItemDeta
         initializeViews();
         bindModelDetailsToViews(modelItem);
         setupSliderView(modelItem.getModelImages());
-        mPresenter.getAdvertiserDetails(modelItem.getAdvertiserId(), this);
     }
 
     private void initializeViews() {
@@ -72,6 +71,15 @@ public class ModelItemDetails extends AppCompatActivity implements ModelItemDeta
                 modelItem.getSellingPrice()));
 
         modelDescTextView.setText(modelItem.getDesc());
+
+        sellingShopNameTextView.setText(String.format(getResources().getString(R.string.selling_shop_name_value),
+                modelItem.getAdvertiser().getName()));
+
+        shopPhoneTextView.setText(String.format(getResources().getString(R.string.shop_phone_value),
+                modelItem.getAdvertiser().getPhone()));
+
+        shopEmailTextView.setText(String.format(getResources().getString(R.string.shop_email_value),
+                modelItem.getAdvertiser().getEmail()));
     }
 
     private void setupSliderView(ArrayList<String> uris) {
@@ -91,22 +99,5 @@ public class ModelItemDetails extends AppCompatActivity implements ModelItemDeta
     @Override
     public void setPresenter(ModelItemDetailsContract.Presenter presenter) {
         mPresenter = presenter;
-    }
-
-    @Override
-    public void onAdvertiserRetrieved(Advertiser advertiser) {
-        sellingShopNameTextView.setText(String.format(getResources().getString(R.string.selling_shop_name_value),
-                advertiser.getName()));
-
-        shopPhoneTextView.setText(String.format(getResources().getString(R.string.shop_phone_value),
-                advertiser.getPhone()));
-
-        shopEmailTextView.setText(String.format(getResources().getString(R.string.shop_email_value),
-                advertiser.getEmail()));
-    }
-
-    @Override
-    public void onAdvertiserRetrievedFailed(String errmsg) {
-        Toast.makeText(this, "Error while retrieving Advertiser Details", Toast.LENGTH_SHORT).show();
     }
 }

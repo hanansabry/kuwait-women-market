@@ -4,8 +4,11 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.android.kwm.Injection;
+import com.android.kwm.data.advertisers.AdvertiserRepository;
 import com.android.kwm.data.categories.CategoriesRepository;
 import com.android.kwm.data.storage.ImagesStorage;
+import com.android.kwm.model.Advertiser;
+import com.android.kwm.model.Category;
 import com.android.kwm.model.ModelItem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,9 +38,11 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
     private SimpleDateFormat df;
     private String advertiserId;
     private final ImagesStorage mImagesStorage;
+    private final AdvertiserRepository mAdvertiserRepository;
 
-    public ModelItemsRepositoryImpl(ImagesStorage imagesStorage) {
+    public ModelItemsRepositoryImpl(ImagesStorage imagesStorage, AdvertiserRepository advertiserRepository) {
         mImagesStorage = imagesStorage;
+        mAdvertiserRepository = advertiserRepository;
         mDatabase = FirebaseDatabase.getInstance();
         df = Injection.getDateFormatter();
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
@@ -48,42 +53,54 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
     @Override
     public void addNewModelItem(final ModelItem modelItem, final ModelItemsInsertionCallback callback) {
         final DatabaseReference modelsDbRef = mDatabase.getReference(MODELS_NODE);
-        modelItem.setAdvertiserId(advertiserId);
         //set start and end advertise time
         modelItem.setAdvertiseStartDate(getAdvertiseStartDate());
         modelItem.setAdvertiseEndDate(getAdvertiseEndDate(modelItem.getAdvertisingTimeType(), modelItem.getAdvertisingTime()));
 
         final String modelId = modelsDbRef.push().getKey();
 
-        //upload model images to firebase storage
-        final ArrayList<String> firebaseStorageImages = new ArrayList<>();
-        for (String uri : modelItem.getModelImages()) {
-            mImagesStorage.uploadImage(Uri.parse(uri), modelItem.getCategory().getId(), modelId, new ImagesStorage.UploadImageCallback() {
-                @Override
-                public void onSuccessfullyImageUploaded(String imgUri) {
-                    firebaseStorageImages.add(imgUri);
-                    if (firebaseStorageImages.size() == modelItem.getModelImages().size()) {
-                        modelItem.setModelImages(firebaseStorageImages);
-                        modelsDbRef.child(modelId).setValue(modelItem).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    callback.onSuccessfullyAddingModelItem();
-                                    addModelToAdvertiserAndCategory(modelId, modelItem.getCategory().getId());
-                                } else {
-                                    callback.onAddingModelItemFailed(task.getException().getMessage());
-                                }
-                            }
-                        });
-                    }
-                }
 
-                @Override
-                public void onImageUploadedFailed(String errmsg) {
-                    callback.onAddingModelItemFailed(errmsg);
+        //firstly get advertiser object then upload images to firebase storage then add model to model nodes
+        mAdvertiserRepository.retrieveAdvertiserById(advertiserId, new AdvertiserRepository.RetrieveAdvertiserCallback() {
+            @Override
+            public void onAdvertiserRetrieved(Advertiser advertiser) {
+                modelItem.setAdvertiser(advertiser);
+                //upload model images to firebase storage
+                final ArrayList<String> firebaseStorageImages = new ArrayList<>();
+                for (String uri : modelItem.getModelImages()) {
+                    mImagesStorage.uploadImage(Uri.parse(uri), modelItem.getCategory().getId(), modelId, new ImagesStorage.UploadImageCallback() {
+                        @Override
+                        public void onSuccessfullyImageUploaded(String imgUri) {
+                            firebaseStorageImages.add(imgUri);
+                            if (firebaseStorageImages.size() == modelItem.getModelImages().size()) {
+                                modelItem.setModelImages(firebaseStorageImages);
+                                modelsDbRef.child(modelId).setValue(modelItem).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            callback.onSuccessfullyAddingModelItem();
+                                            addModelToAdvertiserAndCategory(modelId, modelItem.getCategory().getId());
+                                        } else {
+                                            callback.onAddingModelItemFailed(task.getException().getMessage());
+                                        }
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onImageUploadedFailed(String errmsg) {
+                            callback.onAddingModelItemFailed(errmsg);
+                        }
+                    });
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onAdvertiserRetrievedFailed(String errmsg) {
+                callback.onAddingModelItemFailed(errmsg);
+            }
+        });
     }
 
     private void addModelToAdvertiserAndCategory(String modelId, String categoryId) {
@@ -219,5 +236,28 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
         cal2.setTime(endDate);
         return cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
                             && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
+    }
+
+    @Override
+    public void retrieveFilteredModelItemsByPrice(Category category, final double minValue, final double maxValue, final RetrieveModelItemsCallback callback) {
+        retrieveModelItemsByCategory(category.getId(), new RetrieveModelItemsCallback() {
+            @Override
+            public void onModelItemsRetrieved(ArrayList<ModelItem> modelItems) {
+                ArrayList<ModelItem> filteredModelItems = new ArrayList<>();
+                for (ModelItem modelItem : modelItems) {
+                    if (modelItem.getSellingPrice() >= minValue
+                            && ( modelItem.getSellingPrice() <= maxValue || maxValue == 0)) {
+                        filteredModelItems.add(modelItem);
+                    }
+                }
+
+                callback.onModelItemsRetrieved(filteredModelItems);
+            }
+
+            @Override
+            public void onModelItemsRetrievedFailed(String errmsg) {
+                callback.onModelItemsRetrievedFailed(errmsg);
+            }
+        });
     }
 }

@@ -4,6 +4,7 @@ import com.android.kwm.BaseView;
 import com.android.kwm.advertiser.store.AdvertiserStoreContract;
 import com.android.kwm.advertiser.store.ModelItemRowView;
 import com.android.kwm.data.modelItems.ModelItemsRepository;
+import com.android.kwm.model.Category;
 import com.android.kwm.model.ModelItem;
 
 import java.util.ArrayList;
@@ -28,11 +29,14 @@ public class CategoryModelsPresenter implements AdvertiserStoreContract.Presente
     @Override
     public void onBindStoreItemRowViewAtPosition(int position, ModelItemRowView holder) {
         ModelItem modelItem = mModelItems.get(position);
-        if (modelItem.isActive()) {
-            holder.setModelItemName(modelItem.getName());
-            holder.setModelCategoryName(modelItem.getCategory().getName());
-            holder.setModelItemSwitchActiveInaActive(modelItem.isActive());
-        }
+        holder.setModelItemName(modelItem.getName());
+        holder.setModelCategoryName(modelItem.getCategory().getName());
+        holder.setModelItemSwitchActiveInaActive(modelItem.isActive());
+        holder.setSellingShopName(modelItem.getAdvertiser().getName());
+        holder.setModelItemPrice(modelItem.getSellingPrice() + "KWD");
+        holder.setCategoryViewVisibility(false);
+        holder.setShopNameAndPriceVisibility(true);
+
     }
 
     @Override
@@ -53,6 +57,14 @@ public class CategoryModelsPresenter implements AdvertiserStoreContract.Presente
     @Override
     public void onModelItemClicked(int position) {
         mView.goToModelItemDetailsScreen(mModelItems.get(position));
+    }
+
+    @Override
+    public void applyPriceFilterOnCategoryModels(Category category,
+                                                 double minPriceFilterValue,
+                                                 double maxPriceFilterValue,
+                                                 ModelItemsRepository.RetrieveModelItemsCallback callback) {
+        mModelItemRepository.retrieveFilteredModelItemsByPrice(category, minPriceFilterValue, maxPriceFilterValue, callback);
     }
 
     @Override

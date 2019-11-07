@@ -3,6 +3,7 @@ package com.android.kwm.advertiser.store;
 import com.android.kwm.BasePresenter;
 import com.android.kwm.BaseView;
 import com.android.kwm.data.modelItems.ModelItemsRepository;
+import com.android.kwm.model.Category;
 import com.android.kwm.model.ModelItem;
 
 import java.util.ArrayList;
@@ -25,5 +26,10 @@ public interface AdvertiserStoreContract {
         void retrieveCategoryModelsItems(String categoryId, ModelItemsRepository.RetrieveModelItemsCallback callback);
 
         void onModelItemClicked(int position);
+
+        void applyPriceFilterOnCategoryModels(Category category,
+                                              double minPriceFilterValue,
+                                              double maxPriceFilterValue,
+                                              ModelItemsRepository.RetrieveModelItemsCallback callback);
     }
 }

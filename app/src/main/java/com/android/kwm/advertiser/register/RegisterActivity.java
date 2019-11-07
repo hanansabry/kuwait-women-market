@@ -173,4 +173,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         hideProgressBar();
         Toast.makeText(this, "Registration Failed\n" + errmsg, Toast.LENGTH_LONG).show();
     }
+
+    public void onBackClicked(View view) {
+        onBackPressed();
+    }
 }

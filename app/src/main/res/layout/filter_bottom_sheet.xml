@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/asap"
+            android:text="Filter Options"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:onClick="onDoneClicked"
+            android:padding="8dp"
+            android:src="@drawable/ic_done_black" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        android:background="#f3f3f3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:text="Price"
+            android:textSize="24sp"
+            android:fontFamily="@font/asap"/>
+
+        <CheckBox
+            android:id="@+id/price_filter_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:checked="false"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/price_values_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageButton
+                android:id="@+id/decrease_min_value_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_remove_circle" />
+
+
+            <EditText
+                android:id="@+id/min_price_edittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="MIN PRICE"
+                android:textSize="12sp"
+                android:inputType="numberDecimal"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/increase_min_value_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_add_circle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageButton
+                android:id="@+id/decrease_max_value_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_remove_circle" />
+
+
+            <EditText
+                android:id="@+id/max_price_edittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="MAX PRICE"
+                android:textSize="12sp"
+                android:inputType="numberDecimal"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/increase_max_value_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_add_circle" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

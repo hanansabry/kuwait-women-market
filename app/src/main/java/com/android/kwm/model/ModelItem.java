@@ -28,7 +28,7 @@ public class ModelItem implements Parcelable {
     private ArrayList<String> modelImages;
     private String advertiseStartDate;
     private String advertiseEndDate;
-    private String advertiserId;
+    private Advertiser advertiser;
 
     public ModelItem() {
     }
@@ -45,7 +45,7 @@ public class ModelItem implements Parcelable {
         modelImages = in.createStringArrayList();
         advertiseStartDate = in.readString();
         advertiseEndDate = in.readString();
-        advertiserId = in.readString();
+        advertiser = in.readParcelable(Advertiser.class.getClassLoader());
     }
 
     public static final Creator<ModelItem> CREATOR = new Creator<ModelItem>() {
@@ -78,7 +78,7 @@ public class ModelItem implements Parcelable {
         dest.writeStringList(modelImages);
         dest.writeString(advertiseStartDate);
         dest.writeString(advertiseEndDate);
-        dest.writeString(advertiserId);
+        dest.writeParcelable(advertiser, flags);
     }
 
     public String getId() {
@@ -178,11 +178,11 @@ public class ModelItem implements Parcelable {
         this.advertiseEndDate = advertiseEndDate;
     }
 
-    public String getAdvertiserId() {
-        return advertiserId;
+    public Advertiser getAdvertiser() {
+        return advertiser;
     }
 
-    public void setAdvertiserId(String advertiserId) {
-        this.advertiserId = advertiserId;
+    public void setAdvertiser(Advertiser advertiser) {
+        this.advertiser = advertiser;
     }
 }

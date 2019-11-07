@@ -10,6 +10,7 @@ import com.android.kwm.data.categories.CategoriesRepository;
 import com.android.kwm.data.categories.CategoriesRepositoryImpl;
 import com.android.kwm.data.modelItems.ModelItemsRepository;
 import com.android.kwm.data.modelItems.ModelItemsRepositoryImpl;
+import com.android.kwm.data.storage.ImagesStorage;
 import com.android.kwm.data.storage.ImagesStorageImpl;
 import com.android.kwm.usecase.AddModelUseCaseHandler;
 import com.android.kwm.usecase.AuthenticationUseCaseHandler;
@@ -40,7 +41,11 @@ public class Injection {
     }
 
     public static ModelItemsRepository provideModelItemsRepository() {
-        return new ModelItemsRepositoryImpl(new ImagesStorageImpl());
+        return new ModelItemsRepositoryImpl(provideImageStorage(), provideAdvertiserRepository());
+    }
+
+    private static ImagesStorage provideImageStorage() {
+        return new ImagesStorageImpl();
     }
 
     public static SimpleDateFormat getDateFormatter() {

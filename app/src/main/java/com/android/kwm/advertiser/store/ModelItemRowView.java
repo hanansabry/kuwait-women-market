@@ -7,4 +7,12 @@ public interface ModelItemRowView {
     void setModelCategoryName(String categoryName);
 
     void setModelItemSwitchActiveInaActive(boolean active);
+
+    void setSellingShopName(String name);
+
+    void setModelItemPrice(String price);
+
+    void setCategoryViewVisibility(boolean visible);
+
+    void setShopNameAndPriceVisibility(boolean visible);
 }

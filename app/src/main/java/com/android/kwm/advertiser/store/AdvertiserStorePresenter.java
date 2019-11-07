@@ -1,6 +1,7 @@
 package com.android.kwm.advertiser.store;
 
 import com.android.kwm.data.modelItems.ModelItemsRepository;
+import com.android.kwm.model.Category;
 import com.android.kwm.model.ModelItem;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class AdvertiserStorePresenter implements AdvertiserStoreContract.Present
         holder.setModelItemName(modelItem.getName());
         holder.setModelCategoryName(modelItem.getCategory().getName());
         holder.setModelItemSwitchActiveInaActive(modelItem.isActive());
+        holder.setCategoryViewVisibility(true);
+        holder.setShopNameAndPriceVisibility(false);
     }
 
     @Override
@@ -53,6 +56,11 @@ public class AdvertiserStorePresenter implements AdvertiserStoreContract.Present
 
     @Override
     public void onModelItemClicked(int position) {
+
+    }
+
+    @Override
+    public void applyPriceFilterOnCategoryModels(Category category, double minPriceFilterValue, double maxPriceFilterValue, ModelItemsRepository.RetrieveModelItemsCallback callback) {
 
     }
 }
