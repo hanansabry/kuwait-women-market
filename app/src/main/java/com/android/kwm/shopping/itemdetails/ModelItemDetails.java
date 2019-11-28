@@ -1,23 +1,19 @@
 package com.android.kwm.shopping.itemdetails;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.kwm.BasePresenter;
 import com.android.kwm.Injection;
 import com.android.kwm.R;
-import com.android.kwm.data.advertisers.AdvertiserRepository;
-import com.android.kwm.model.Advertiser;
 import com.android.kwm.model.ModelItem;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ModelItemDetails extends AppCompatActivity implements ModelItemDetailsContract.View {
 
@@ -31,12 +27,13 @@ public class ModelItemDetails extends AppCompatActivity implements ModelItemDeta
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_model_item_details);
 
-        mPresenter = new ItemDetailsPresenter(this, Injection.provideAdvertiserRepository());
+        mPresenter = new ItemDetailsPresenter(this, Injection.provideAdvertiserRepository(), Injection.provideModelItemsRepository());
 
         ModelItem modelItem = (ModelItem) getIntent().getExtras().get(ModelItem.MODEL);
         initializeViews();
         bindModelDetailsToViews(modelItem);
         setupSliderView(modelItem.getModelImages());
+        mPresenter.updateNumberOfViews(modelItem.getId(), modelItem.getNumberOfViews());
     }
 
     private void initializeViews() {

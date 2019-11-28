@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -133,15 +132,15 @@
                     android:id="@+id/advertising_time_radio_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checkedButton="@id/months"
+                    android:checkedButton="@id/weeks"
                     android:padding="8dp">
 
                     <RadioButton
-                        android:id="@+id/months"
+                        android:id="@+id/weeks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/asap"
-                        android:text="Months"
+                        android:text="Weekly"
                         android:textColor="@color/colorAccent"
                         android:textSize="14sp" />
 
@@ -232,6 +231,28 @@
             android:background="@drawable/btn_rounded_color_accent"
             android:text="Add Model Images"
             android:textColor="@android:color/white" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/images_uploaded_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Images are uploaded"
+                android:textColor="@android:color/darker_gray"
+                android:layout_gravity="center"
+                android:visibility="invisible" />
+
+            <ProgressBar
+                android:id="@+id/images_uploading_progressbar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:visibility="invisible" />
+        </FrameLayout>
 
         <!--<ImageView-->
         <!--android:id="@+id/selected_img"-->

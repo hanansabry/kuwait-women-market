@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.android.kwm.Injection;
 import com.android.kwm.data.advertisers.AdvertiserRepository;
-import com.android.kwm.data.categories.CategoriesRepository;
 import com.android.kwm.data.storage.ImagesStorage;
 import com.android.kwm.model.Advertiser;
 import com.android.kwm.model.Category;
@@ -23,9 +22,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 
@@ -125,8 +125,8 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (type == ModelItem.AdvertisingTimeType.Month) {
-            calendar.add(Calendar.MONTH, advertisingTime);
+        if (type == ModelItem.AdvertisingTimeType.Week) {
+            calendar.add(Calendar.WEEK_OF_MONTH, advertisingTime);
         } else {
             calendar.add(Calendar.DATE, advertisingTime);
         }
@@ -172,6 +172,7 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
                 for (DataSnapshot modelSnapshot : dataSnapshot.getChildren()) {
                     if (modelIds.contains(modelSnapshot.getKey())) {
                         ModelItem modelItem = modelSnapshot.getValue(ModelItem.class);
+                        modelItem.setId(modelSnapshot.getKey());
                         Date currentDay = Calendar.getInstance().getTime();
                         try {
                             Date endDate = Injection.getDateFormatter().parse(modelItem.getAdvertiseEndDate());
@@ -190,7 +191,7 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
                     }
                 }
 
-                callback.onModelItemsRetrieved(modelItems);
+                callback.onModelItemsRetrieved(sortBydate(modelItems));
             }
 
             @Override
@@ -235,7 +236,17 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
         cal1.setTime(currentDay);
         cal2.setTime(endDate);
         return cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
-                            && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
+                && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
+    }
+
+    private ArrayList<ModelItem> sortBydate(ArrayList<ModelItem> modelItems) {
+        Collections.sort(modelItems, new Comparator<ModelItem>() {
+            @Override
+            public int compare(ModelItem o1, ModelItem o2) {
+                return o2.getAdvertiseStartDate().compareTo(o1.getAdvertiseStartDate());
+            }
+        });
+        return modelItems;
     }
 
     @Override
@@ -246,7 +257,7 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
                 ArrayList<ModelItem> filteredModelItems = new ArrayList<>();
                 for (ModelItem modelItem : modelItems) {
                     if (modelItem.getSellingPrice() >= minValue
-                            && ( modelItem.getSellingPrice() <= maxValue || maxValue == 0)) {
+                            && (modelItem.getSellingPrice() <= maxValue || maxValue == 0)) {
                         filteredModelItems.add(modelItem);
                     }
                 }
@@ -259,5 +270,13 @@ public class ModelItemsRepositoryImpl implements ModelItemsRepository {
                 callback.onModelItemsRetrievedFailed(errmsg);
             }
         });
+    }
+
+    @Override
+    public void updateModelNumberOfViews(String modelId, int currentViews) {
+        DatabaseReference modelRef = mDatabase.getReference(MODELS_NODE).child(modelId);
+        HashMap<String, Object> viewsValue = new HashMap<>();
+        viewsValue.put("numberOfViews", currentViews + 1);
+        modelRef.updateChildren(viewsValue);
     }
 }

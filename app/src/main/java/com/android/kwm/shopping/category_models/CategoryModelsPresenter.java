@@ -1,6 +1,5 @@
 package com.android.kwm.shopping.category_models;
 
-import com.android.kwm.BaseView;
 import com.android.kwm.advertiser.store.AdvertiserStoreContract;
 import com.android.kwm.advertiser.store.ModelItemRowView;
 import com.android.kwm.data.modelItems.ModelItemsRepository;
@@ -36,7 +35,9 @@ public class CategoryModelsPresenter implements AdvertiserStoreContract.Presente
         holder.setModelItemPrice(modelItem.getSellingPrice() + "KWD");
         holder.setCategoryViewVisibility(false);
         holder.setShopNameAndPriceVisibility(true);
-
+        holder.setActiveButtonVisibility(false);
+        holder.setModelItemImage(modelItem.getModelImages().get(0));
+        holder.setModelItemDateAndViews(modelItem.getAdvertiseStartDate(), modelItem.getNumberOfViews());
     }
 
     @Override

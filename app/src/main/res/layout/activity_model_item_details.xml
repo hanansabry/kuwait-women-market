@@ -95,11 +95,11 @@
                 android:id="@+id/imageSlider"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                app:sliderAnimationDuration="1500"
+                app:sliderAnimationDuration="800"
                 app:sliderAutoCycleDirection="back_and_forth"
                 app:sliderAutoCycleEnabled="true"
                 app:sliderCircularHandlerEnabled="true"
-                app:sliderIndicatorAnimationDuration="500"
+                app:sliderIndicatorAnimationDuration="0"
                 app:sliderIndicatorGravity="center_horizontal|bottom"
                 app:sliderIndicatorMargin="15dp"
                 app:sliderIndicatorOrientation="horizontal"
@@ -107,7 +107,7 @@
                 app:sliderIndicatorRadius="2dp"
                 app:sliderIndicatorSelectedColor="#5A5A5A"
                 app:sliderIndicatorUnselectedColor="#FFF"
-                app:sliderScrollTimeInSec="4"
+                app:sliderScrollTimeInSec="3"
                 app:sliderStartAutoCycle="true" />
 
         </androidx.cardview.widget.CardView>

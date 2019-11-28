@@ -20,4 +20,8 @@
     <string name="selling_shop_name_value">Selling Shop: %s</string>
     <string name="shop_phone_value">Phone: %s</string>
     <string name="shop_email_value">Email: %s</string>
+    <string name="permission_rationale">Location permission is needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core         functionality.</string>
+    <string name="settings">Settings</string>
+    <string name="ad_views_value">Ad Views: %d</string>
 </resources>

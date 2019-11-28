@@ -15,4 +15,10 @@ public interface ModelItemRowView {
     void setCategoryViewVisibility(boolean visible);
 
     void setShopNameAndPriceVisibility(boolean visible);
+
+    void setActiveButtonVisibility(boolean b);
+
+    void setModelItemImage(String uri);
+
+    void setModelItemDateAndViews(String date, int numberOfViews);
 }

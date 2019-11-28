@@ -1,6 +1,5 @@
 package com.android.kwm.model;
 
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -13,7 +12,7 @@ public class ModelItem implements Parcelable {
     public static final String MODEL = "MODEL";
 
     public enum AdvertisingTimeType {
-        Month, Day
+        Week, Day
     }
 
     private String id;
@@ -29,6 +28,7 @@ public class ModelItem implements Parcelable {
     private String advertiseStartDate;
     private String advertiseEndDate;
     private Advertiser advertiser;
+    private int numberOfViews;
 
     public ModelItem() {
     }
@@ -46,6 +46,7 @@ public class ModelItem implements Parcelable {
         advertiseStartDate = in.readString();
         advertiseEndDate = in.readString();
         advertiser = in.readParcelable(Advertiser.class.getClassLoader());
+        numberOfViews = in.readInt();
     }
 
     public static final Creator<ModelItem> CREATOR = new Creator<ModelItem>() {
@@ -79,6 +80,7 @@ public class ModelItem implements Parcelable {
         dest.writeString(advertiseStartDate);
         dest.writeString(advertiseEndDate);
         dest.writeParcelable(advertiser, flags);
+        dest.writeInt(numberOfViews);
     }
 
     public String getId() {
@@ -184,5 +186,13 @@ public class ModelItem implements Parcelable {
 
     public void setAdvertiser(Advertiser advertiser) {
         this.advertiser = advertiser;
+    }
+
+    public int getNumberOfViews() {
+        return numberOfViews;
+    }
+
+    public void setNumberOfViews(int numberOfViews) {
+        this.numberOfViews = numberOfViews;
     }
 }

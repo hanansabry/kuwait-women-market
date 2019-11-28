@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -10,143 +9,200 @@
         android:id="@+id/service_types_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:divider="@android:color/transparent"
         android:dividerHeight="0.0px"
-        android:layout_margin="8dp"
         android:elevation="2dp"
         app:cardElevation="4dp"
         app:cardPreventCornerOverlap="false">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:weightSum="3">
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/model_ad_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/logo"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"
+                android:layout_below="@id/model_ad_imageview"
+                android:background="@android:color/darker_gray"
+                android:visibility="gone" />
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2.4"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/model_name_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/asap"
-                    android:text="Model Name"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:id="@+id/category_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="invisible">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="4dp"
-                            android:fontFamily="@font/asap"
-                            android:text="Category:"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/category_name_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/asap"
-                            android:text="Category Name"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/advertiser_price_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="invisible">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="4dp"
-                            android:fontFamily="@font/asap"
-                            android:text="Shop:"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/selling_shop_name_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/asap"
-                            android:text="Shop Name"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="14sp"
-                            android:layout_marginEnd="4dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="4dp"
-                            android:fontFamily="@font/asap"
-                            android:text="Price:"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/item_price_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/asap"
-                            android:text="123 KWD"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </FrameLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/main_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/divider"
                 android:layout_gravity="center"
-                android:layout_weight=".6"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:weightSum="3">
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/active_switch"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2.4"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/model_name_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/asap"
+                        android:text="Model Name"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/category_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/asap"
+                                android:text="Category:"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/category_name_textview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/asap"
+                                android:text="Category Name"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/advertiser_price_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/asap"
+                                android:text="Shop:"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/selling_shop_name_textview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/asap"
+                                android:text="Shop Name"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="4dp"
+                                android:fontFamily="@font/asap"
+                                android:text="Price:"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/item_price_textview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/asap"
+                                android:text="123 KWD"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:clickable="false"
-                    android:gravity="center" />
+                    android:layout_weight=".6"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/item_status_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/asap"
-                    android:text="InActive"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="14sp" />
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/active_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/item_status_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/asap"
+                        android:text="InActive"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/date_views_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_layout"
+                android:visibility="gone"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
+
+                <TextView
+                    android:id="@+id/number_of_views_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ad_views_value"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:id="@+id/model_date_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23-Nov-2019"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

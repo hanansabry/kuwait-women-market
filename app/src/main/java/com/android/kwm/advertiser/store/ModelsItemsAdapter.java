@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.kwm.R;
 import com.android.kwm.model.ModelItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -49,11 +51,11 @@ public class ModelsItemsAdapter extends RecyclerView.Adapter<ModelsItemsAdapter.
 
 
     class StoreItemViewHolder extends RecyclerView.ViewHolder implements ModelItemRowView, View.OnClickListener {
-        private TextView modelNameTextView, categoryNameTextView, activeInActiveTextView
-                , shopNameTextView, itemPriceTextView;
+        private TextView modelNameTextView, categoryNameTextView, activeInActiveTextView, modelItemDate, shopNameTextView, itemPriceTextView, numViewsTextView;
         private SwitchCompat activeSwitch;
+        private ImageView modelImageView;
         private Context context;
-        private View categoryView, shopPriceView;
+        private View categoryView, shopPriceView, divider, modelDateViewsLayout;
 
         public StoreItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,9 +67,15 @@ public class ModelsItemsAdapter extends RecyclerView.Adapter<ModelsItemsAdapter.
             activeSwitch = itemView.findViewById(R.id.active_switch);
             shopNameTextView = itemView.findViewById(R.id.selling_shop_name_textview);
             itemPriceTextView = itemView.findViewById(R.id.item_price_textview);
+            numViewsTextView = itemView.findViewById(R.id.number_of_views_textview);
 
             categoryView = itemView.findViewById(R.id.category_view);
             shopPriceView = itemView.findViewById(R.id.advertiser_price_view);
+            modelItemDate = itemView.findViewById(R.id.model_date_textview);
+
+            modelImageView = itemView.findViewById(R.id.model_ad_imageview);
+            modelDateViewsLayout = itemView.findViewById(R.id.date_views_layout);
+            divider = itemView.findViewById(R.id.divider);
 
             itemView.setOnClickListener(this);
         }
@@ -111,6 +119,30 @@ public class ModelsItemsAdapter extends RecyclerView.Adapter<ModelsItemsAdapter.
         @Override
         public void setShopNameAndPriceVisibility(boolean visible) {
             shopPriceView.setVisibility(visible? View.VISIBLE : View.INVISIBLE);
+        }
+
+        @Override
+        public void setActiveButtonVisibility(boolean visible) {
+            activeSwitch.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+            activeInActiveTextView.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+        }
+
+        @Override
+        public void setModelItemImage(String uri) {
+            divider.setVisibility(View.VISIBLE);
+            modelImageView.setVisibility(View.VISIBLE);
+            Picasso.get()
+                    .load(uri)
+                    .placeholder(R.drawable.logo)
+                    .into(modelImageView);
+        }
+
+        @Override
+        public void setModelItemDateAndViews(String date, int numberOfViews) {
+            modelDateViewsLayout.setVisibility(View.VISIBLE);
+//            modelItemDate.setVisibility(View.VISIBLE);
+            modelItemDate.setText(date);
+            numViewsTextView.setText(String.format(context.getString(R.string.ad_views_value), numberOfViews));
         }
 
         @Override

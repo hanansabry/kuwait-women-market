@@ -3,10 +3,8 @@ package com.android.kwm.data.storage;
 import android.net.Uri;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -26,7 +24,7 @@ public class ImagesStorageImpl implements ImagesStorage {
 
     @Override
     public void uploadImage(Uri filePath, String categoryId, String modelId, final UploadImageCallback callback) {
-        if (filePath != null) {
+        if (filePath != null && !filePath.toString().contains("https://firebasestorage.googleapis")) {
             String storagePath = "categories/" + categoryId + "/models/" + modelId + "/" + UUID.randomUUID().toString();
             final StorageReference storageRef = firebaseStorage.getReference().child(storagePath);
             storageRef.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,34 +8,34 @@
 
     <ImageView
         android:id="@+id/app_logo_img_view"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="128dp"
         android:src="@drawable/logo"/>
 
-    <TextView
-        android:id="@+id/app_name_txt_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/app_logo_img_view"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp"
-        android:fontFamily="@font/asap"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textColor="@color/colorPrimary"
-        android:textSize="40sp"
-        android:padding="8dp"
-        android:textStyle="bold"
-        tools:fontFamily="@font/asap" />
+    <!--<TextView-->
+    <!--android:id="@+id/app_name_txt_view"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@id/app_logo_img_view"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="46dp"-->
+    <!--android:fontFamily="@font/asap"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/app_name"-->
+    <!--android:textColor="@color/colorPrimary"-->
+    <!--android:textSize="40sp"-->
+    <!--android:padding="8dp"-->
+    <!--android:textStyle="bold"-->
+    <!--tools:fontFamily="@font/asap" />-->
 
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/app_name_txt_view"
+        android:layout_below="@id/app_logo_img_view"
         android:layout_centerHorizontal="true"
         android:indeterminate="true"
         android:indeterminateTintMode="src_atop"

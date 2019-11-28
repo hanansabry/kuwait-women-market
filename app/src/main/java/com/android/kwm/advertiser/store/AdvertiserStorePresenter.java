@@ -37,6 +37,7 @@ public class AdvertiserStorePresenter implements AdvertiserStoreContract.Present
         holder.setModelItemSwitchActiveInaActive(modelItem.isActive());
         holder.setCategoryViewVisibility(true);
         holder.setShopNameAndPriceVisibility(false);
+        holder.setActiveButtonVisibility(true);
     }
 
     @Override

@@ -21,5 +21,7 @@ public interface ModelItemDetailsContract {
         void bindItemImagesUris(ArrayList<String> uris);
 
         void getAdvertiserDetails(String id, AdvertiserRepository.RetrieveAdvertiserCallback callback);
+
+        void updateNumberOfViews(String modelId, int currentViews);
     }
 }
